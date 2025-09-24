@@ -1,29 +1,29 @@
-"use client"; // 👈 this makes it a Client Component
 
+import Link from "next/link";
 import { appUrl } from "./services/config";
-import { useSearchParams } from "next/navigation";
 
-// const userId = "3758";
 const baseUrl = appUrl;
 console.log(baseUrl);
 // const imageUrl = `https://twitter-og-beta.vercel.app/ETH_USD?side=BUY&leverage=1010&pnl=0&price=100`;
 
+export default async function Home({ searchParams }: { searchParams: Promise<{ user_id?: string }> }) {
+  const resolvedSearchParams = await searchParams;
+  const user_id = resolvedSearchParams?.user_id ?? "3758"; // fallback if missing
 
-export default function Home() {
-  const randomNumber = Math.floor(Math.random() * (3800 - 3400 + 1)) + 3400;
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("user_id");
-  console.log(userId, '======================================');
-  const imageUrl = `${baseUrl}/api/og?user_id=${userId}`;
-  console.log(randomNumber, '======================================');
+  const randomNumber = Math.floor(Math.random() * (3800 - 3100 + 1)) + 3200;
+  // const userId = searchParams.get("user_id");
+  console.log(user_id, '======================================');
+  const imageUrl = `${baseUrl}/api/og?user_id=${user_id}`;
+  // console.log(randomNumber, '======================================');
   const shareimageUrl = `${baseUrl}?user_id=${randomNumber}`;
 
-  const shareToTwitter = () => {
-    const twitterUrl = `https://twitter.com/intent/tweet?text=Check out this image!&url=${encodeURIComponent(
-      shareimageUrl
-    )}`;
-    window.open(twitterUrl, "_blank");
-  };
+  const twitterUrl = `https://twitter.com/intent/tweet?text=Check out this image!&url=${encodeURIComponent(
+    shareimageUrl
+  )}`;
+  // const shareToTwitter = () => {
+   
+  //   window.open(twitterUrl, "_blank");
+  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8">
@@ -40,12 +40,12 @@ export default function Home() {
           />
         </div>
 
-        <button
-          onClick={shareToTwitter}
+        <Link
+          href={twitterUrl}  target="_blank"
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >
           Share to Twitter
-        </button>
+        </Link>
       </div>
     </div>
   );
