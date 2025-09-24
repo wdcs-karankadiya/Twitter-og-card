@@ -8,12 +8,15 @@ const baseUrl = appUrl;
 console.log(baseUrl);
 // const imageUrl = `https://twitter-og-beta.vercel.app/ETH_USD?side=BUY&leverage=1010&pnl=0&price=100`;
 
+
 export default function Home() {
+  const randomNumber = Math.floor(Math.random() * (3800 - 3400 + 1)) + 3400;
   const searchParams = useSearchParams();
   const userId = searchParams.get("user_id");
   console.log(userId, '======================================');
   const imageUrl = `${baseUrl}/api/og?user_id=${userId}`;
-  const shareimageUrl = `${baseUrl}?user_id=${userId}`;
+  console.log(randomNumber, '======================================');
+  const shareimageUrl = `${baseUrl}?user_id=${randomNumber}`;
 
   const shareToTwitter = () => {
     const twitterUrl = `https://twitter.com/intent/tweet?text=Check out this image!&url=${encodeURIComponent(
